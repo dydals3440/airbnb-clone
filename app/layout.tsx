@@ -2,10 +2,11 @@ import type { Metadata } from 'next';
 import { Nunito } from 'next/font/google';
 import './globals.css';
 import Navbar from './components/navbar/Navbar';
-import ClientOnly from './components/Clientonly';
+import ClientOnly from './components/ClientOnly';
 import Modal from './components/modals/Modal';
 import RegisterModal from './components/modals/RegisterModal';
 import ToasterProvider from './providers/ToasterProvider';
+import LoginModal from './components/modals/LoginModal';
 
 const inter = Nunito({ subsets: ['latin'] });
 
@@ -31,6 +32,7 @@ export default function RootLayout({
           <ToasterProvider />
           {/* <Modal actionLabel='Submit' title='Hello world' isOpen /> */}
           <RegisterModal />
+          <LoginModal />
           <Navbar />
         </ClientOnly>
 
