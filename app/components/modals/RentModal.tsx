@@ -10,6 +10,9 @@ import Heading from "../Heading";
 import { categories } from "../navbar/Categories";
 import CategoryInput from "../inputs/CategoryInput";
 import CountrySelect from "../inputs/CountrySelect";
+import dynamic from "next/dynamic";
+// SSR NOT WORK
+// import Map from "../Map";
 
 enum STEPS {
   CATEGORY = 0,
@@ -49,6 +52,15 @@ const RentModal = () => {
   // 지정된 카테고리를 관찰하고, 그 값들을 반환하여 렌더링 . 할대상을 결정할 . 떄유용.
   const category = watch("category");
   const location = watch("location");
+
+  // 지역 선택시 지도가 반영안되었는데, 이것을 해결하는 방법!
+  const Map = useMemo(
+    () =>
+      dynamic(() => import("../Map"), {
+        ssr: false,
+      }),
+    [location]
+  );
   // react-hook-form에서 제공하는 setValue는 리렌더링하지않음.
   const setCustomValue = (id: string, value: any) => {
     // setValue(id, value, option) 형태로 값 설정
@@ -113,6 +125,7 @@ const RentModal = () => {
           value={location}
           onChange={(value) => setCustomValue("location", value)}
         />
+        <Map center={location?.latlng} />
       </div>
     );
   }
