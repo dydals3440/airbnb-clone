@@ -9,6 +9,7 @@ import Modal from "./Modal";
 import Heading from "../Heading";
 import { categories } from "../navbar/Categories";
 import CategoryInput from "../inputs/CategoryInput";
+import CountrySelect from "../inputs/CountrySelect";
 
 enum STEPS {
   CATEGORY = 0,
@@ -45,9 +46,12 @@ const RentModal = () => {
     },
   });
   // 3:34
+  // 지정된 카테고리를 관찰하고, 그 값들을 반환하여 렌더링 . 할대상을 결정할 . 떄유용.
   const category = watch("category");
+  const location = watch("location");
   // react-hook-form에서 제공하는 setValue는 리렌더링하지않음.
   const setCustomValue = (id: string, value: any) => {
+    // setValue(id, value, option) 형태로 값 설정
     setValue(id, value, {
       shouldDirty: true,
       shouldTouch: true,
@@ -98,11 +102,27 @@ const RentModal = () => {
     </div>
   );
 
+  if (step === STEPS.LOCATION) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="Where is your place located?"
+          subtitle="Help guests find you!"
+        />
+        <CountrySelect
+          value={location}
+          onChange={(value) => setCustomValue("location", value)}
+        />
+      </div>
+    );
+  }
+
   return (
     <Modal
       isOpen={rentModal.isOpen}
       onClose={rentModal.onClose}
-      onSubmit={rentModal.onClose}
+      // 다음 단계로 변경
+      onSubmit={onNext}
       actionLabel={actionLabel}
       secondaryActionLabel={secondaryActionLabel}
       secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
