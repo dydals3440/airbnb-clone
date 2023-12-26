@@ -3,6 +3,7 @@ import getListingById from "@/app/actions/getListingById";
 import ClientOnly from "@/app/components/ClientOnly";
 import EmptyState from "@/app/components/EmptyState";
 import ListingClient from "./ListingClient";
+import getReservations from "@/app/actions/getReservation";
 
 interface IParams {
   listingId?: string;
@@ -11,6 +12,7 @@ interface IParams {
 // Server Component라 useRouter안씀.
 const ListingPage = async ({ params }: { params: IParams }) => {
   const listing = await getListingById(params);
+  const reservations = await getReservations(params);
   const currentUser = await getCurrentUser();
   // listing이 null일수도 있다. 처리
   if (!listing) {
@@ -23,7 +25,11 @@ const ListingPage = async ({ params }: { params: IParams }) => {
 
   return (
     <ClientOnly>
-      <ListingClient listing={listing} currentUser={currentUser} />
+      <ListingClient
+        reservations={reservations}
+        listing={listing}
+        currentUser={currentUser}
+      />
     </ClientOnly>
   );
 };
