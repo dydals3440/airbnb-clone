@@ -23,7 +23,8 @@ const Home = async ({ searchParams }: HomeProps) => {
     );
   }
 
-  throw new Error('Something went wrong');
+  // 강제 에러 만들기
+  // throw new Error('Something went wrong');
 
   return (
     <ClientOnly>
