@@ -18,6 +18,7 @@ interface CountrySelectProps {
 }
 
 const CountrySelect: React.FC<CountrySelectProps> = ({ value, onChange }) => {
+  // useCountries 훅을 통해, getAll() 함수를 호출하면 국가별 정보를 전체 불러옴.
   const { getAll } = useCountries();
   return (
     <div>
@@ -26,6 +27,7 @@ const CountrySelect: React.FC<CountrySelectProps> = ({ value, onChange }) => {
         isClearable
         options={getAll()}
         value={value}
+        // onChange 함수는, value 변경시 값을 바꿔주는 함수를 호출하는거임!
         onChange={(value) => onChange(value as CountrySelectValue)}
         formatOptionLabel={(option: any) => (
           <div className="flex flex-row items-center gap-3">
